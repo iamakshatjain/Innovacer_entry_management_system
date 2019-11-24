@@ -1,6 +1,9 @@
 const app = (require('express'))();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+var cors = require("cors");
+
+app.use(cors());
 
 mongoose.connect("mongodb://localhost/innovacer", {useNewUrlParser : true});
 
