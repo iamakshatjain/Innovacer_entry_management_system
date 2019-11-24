@@ -11,6 +11,10 @@ export default class checkoutForm extends React.Component {
   handleSubmit = async e => {
     e.preventDefault();
     const data = {e : this.state.email};
+    if (data.e == ""){
+      alert("No empty request allowed.\nPlease try again.");
+      return;
+    }
 
     //calling the api to create a visitor
     const resp = await axios({

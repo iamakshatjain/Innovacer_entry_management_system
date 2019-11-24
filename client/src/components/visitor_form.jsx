@@ -17,6 +17,20 @@ export default class visitorForm extends React.Component {
     handleSubmit = async(e) => {
         e.preventDefault();
         const data = this.state;
+        if(data.name=="" || data.host_name==""){
+          alert("No empty request allowed.\nPlease try again.");
+          return;
+        }
+
+        if (data.phone == data.host_phone) {
+          alert("Visitor and host must not have same mobile numbers");
+          return;
+        }
+
+        if (data.email == data.host_email) {
+          alert("Visitor and host must not have same email");
+          return;
+        }
         
         //calling the api to create a visitor
         const resp = await axios({
@@ -28,11 +42,13 @@ export default class visitorForm extends React.Component {
           }
         });
 
-        if (resp.error !== undefined) {
-          console.log(resp.error);
-          if (resp.error === "VISITORFOUND") {
+        console.log(resp);
+
+        if (resp.data.error !== undefined) {
+          console.log(resp.data.error);
+          if (resp.data.error === "VISITORFOUND") {
             alert("A guest already registered with this name");
-          } else if (resp.error === "NOHOSTFOUND") {
+          } else if (resp.data.error === "NOHOSTFOUND") {
             alert("No host with these details exists");
           } else {
             alert(

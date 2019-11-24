@@ -25,7 +25,7 @@ class Home extends React.Component{
               />
 
               <br />
-              <button className="ui primary button" style={{marginTop:"10vh"}}>
+              <button className="ui primary button big" style={{marginTop:"10vh"}}>
                 <Link
                   to="/visitor"
                   style={{ textDecoration: "none", color: "white" }}
