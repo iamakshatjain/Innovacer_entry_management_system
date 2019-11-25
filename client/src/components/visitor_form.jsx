@@ -53,7 +53,7 @@ export default class visitorForm extends React.Component {
           } else if (resp.data.error === "NOHOSTFOUND") {
             alert("No host with these details exists");
           } else if (resp.data.error === "NETWORKISSUE") {
-            alert("There seems to be an issue with the internet. Please contact from the front desk.");
+            alert("There seems to be an issue with the network. Please contact from the front desk.");
           } else {
             alert(
               "There was some error. Please try again. If the error continues, please email at developer.akshatjain@gmail.com"

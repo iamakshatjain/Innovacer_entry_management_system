@@ -5,7 +5,10 @@ var cors = require("cors");
 
 app.use(cors());
 
-mongoose.connect("mongodb://localhost/innovacer", {useNewUrlParser : true});
+mongoose.connect(
+  "mongodb+srv://test:akshatjain@innovacer-m8uau.mongodb.net/test?retryWrites=true&w=majority",
+  { useNewUrlParser: true }
+);
 
 const visitorRoutes = require("./routes/visitor_routes");
 const hostRoutes = require("./routes/host_routes");

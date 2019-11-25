@@ -64,7 +64,6 @@ router.post("/add", (req, res) => {
               }
               else{
                 console.log("VISITOR CREATED");
-                // console.log(createdVisitor);
 
                 const request = mailjet
                   .post("send", { 'version': 'v3.1' })
@@ -229,7 +228,6 @@ router.put("/checkout", (req, res) => {
                     ],
                     "Subject": "Greetings from Akshat",
                     "TextPart": `Thanks for visiing Innovacer.\n\nVisit Details,  \nName : ${visitor.name} \nPhone : ${visitor.phone} \nCheck In Time : ${new Date(parseInt(visitor.check_in)).toLocaleString()}\nCheck Out Time : ${new Date(parseInt(visitor.check_out)).toLocaleString()}\nHost Name : ${visitor.host_name}\nAddress Visited : ${visitor.add_visited}\n\nHave a nice day!.`,
-                    // "HTMLPart": "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!"
                   }
                 ]
               })
@@ -248,8 +246,6 @@ router.put("/checkout", (req, res) => {
                 res.send({ error: err });
                 return;
               })
-
-          //todo : sms to the visitor
           } 
       })
     }
