@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const router = require('express').Router();
-const mailjet = require("node-mailjet").connect(
-  "1e977f6e138d3b4000b30ba0ee73b995",
-  "2777d25dad8fa25676c9bf3123227dd8"
-);
+const mailjet = require("node-mailjet").connect(process.env.MJ_APIKEY_PUBLIC,process.env.MJ_APIKEY_PRIVATE);
 
 const axios = require("axios");
 

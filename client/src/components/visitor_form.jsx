@@ -86,11 +86,14 @@ export default class visitorForm extends React.Component {
 
     render() {
         return (
-          <div
-            className="ui"
-          >
+          <div className="ui">
             <h1
-              style={{ textAlign: "center", paddingTop: "5vh", color: "white", fontSize:"3rem" }}
+              style={{
+                textAlign: "center",
+                paddingTop: "5vh",
+                color: "white",
+                fontSize: "3rem"
+              }}
             >
               VISITOR REGISTRATION
             </h1>
@@ -132,7 +135,7 @@ export default class visitorForm extends React.Component {
                           <label htmlFor="email">Email</label>
                           <div className="ui left icon input">
                             <input
-                            required  
+                              required
                               placeholder="Visitor Email"
                               id="email"
                               name="email"
@@ -150,7 +153,7 @@ export default class visitorForm extends React.Component {
                           <label htmlFor="phone">Phone</label>
                           <div className="ui left icon input">
                             <input
-                            required  
+                              required
                               placeholder="Visitor Phone"
                               id="phone"
                               name="phone"
@@ -191,7 +194,7 @@ export default class visitorForm extends React.Component {
                           <label htmlFor="host_email">Email</label>
                           <div className="ui left icon input">
                             <input
-                            required  
+                              required
                               placeholder="Host Email"
                               id="host_email"
                               name="host_email"
@@ -209,7 +212,7 @@ export default class visitorForm extends React.Component {
                           <label htmlFor="host_phone">Phone</label>
                           <div className="ui left icon input">
                             <input
-                            required  
+                              required
                               placeholder="Host Phone"
                               id="host_phone"
                               name="host_phone"
@@ -232,22 +235,22 @@ export default class visitorForm extends React.Component {
                       flexDirection: "row"
                     }}
                   >
-                    <button
-                      type="button"
-                      className="ui inverted basic blue button"
+                    <Link
+                      to="/"
                       style={{
-                        width: "100%",
+                        textDecoration: "none",
+                        color: "white",
                         textAlign: "center",
                         marginRight: "1rem"
                       }}
                     >
-                      <Link
-                        to="/"
-                        style={{ textDecoration: "none", color: "white" }}
+                      <button
+                        type="button"
+                        className="ui inverted basic blue button"
                       >
                         <i className="arrow left icon"></i>Home
-                      </Link>
-                    </button>
+                      </button>
+                    </Link>
                     <button
                       type="submit"
                       className="ui inverted basic red button"
@@ -255,23 +258,22 @@ export default class visitorForm extends React.Component {
                     >
                       Checkin
                     </button>
-                    <button
-                      type="button"
-                      className="ui inverted basic blue button"
+                    <Link
+                      to="/checkout"
                       style={{
-                        width: "100%",
                         textAlign: "center",
-                        marginLeft: "1rem"
-
+                        marginLeft: "1rem",
+                        textDecoration: "none",
+                        color: "white"
                       }}
                     >
-                      <Link
-                        to="/checkout"
-                        style={{ textDecoration: "none", color: "white" }}
+                      <button
+                        type="button"
+                        className="ui inverted basic blue button"
                       >
                         Checkout<i className="arrow right icon"></i>
-                      </Link>
-                    </button>
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </form>

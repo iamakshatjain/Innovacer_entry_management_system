@@ -1,15 +1,39 @@
 # **Innovacer Entry Mangement System**
+![Innovacer Logo](https://innovaccer.com/static/image/site-logo/innovaccer-logo-black.svg)
 
-The application is a [SDE summer internship](https://summergeeks.in/) assignment submission.
+The software is an assignment submission for [Innovacer SDE summer 2020 internship](https://summergeeks.in/).
 
-This is a web based entry management system made with ReactJS on the front end and a ExpressJS based API on the backend,
+This is a web based entry management system made with ReactJS on the front end and a ExpressJS based API on the backend with MongoDB as database.
+#### Demonstration
+- Youtube Video : 
+- React app (Client Side) : [http://innovems.herokuapp.com/](http://innovems.herokuapp.com/)
+- API (Server Side) : [https://innov-api.herokuapp.com/](https://innov-api.herokuapp.com/)
+
 ### Assumptions
-### Handeled Test Cases
-### Folder Structure
+ -  The software is being made to be used in a screen at the reception desk of the organisation and not in mobile devices of visitors. 
+ --Hence he must have no access to data other than his own.
+ --Hence there is also no need for authentication.
+ --The user Interface must be as user friendly and simple as possible.
+ -  As the software belongs to the organisation. It is assumed that we have a list of hosts/employees of the company. 
+ --	The visitor is allowed to check in if the host details exists.
+ --	The check for the above is coded in `routes > visitor_routes.js` from line 35-51, but commented **for evaluation puposes** .
+ --	The hosts can be added by the use of host routes described below, if uncommented.
+ -  Assuming that the software is being made for a particular region only. Hence the address_visited is hardcoded for now as `Innovacer Offices, Gautam Buddha Nagar, India` 
 
-Youtube Video : 
-Client Side : [http://innovems.herokuapp.com/](http://innovems.herokuapp.com/)
-API (Server Side) : [https://innov-api.herokuapp.com/](https://innov-api.herokuapp.com/)
+### Handeled Test Cases
+- For all the forms in the software, all the fields are manadatory.
+- Network issues are checked upon for the API calls at the front end.
+	#### Visitor Form
+- Email for the host and the visitor must not be same.
+- Host must be registered before visitor can enter his details into the form ( coded and commented - `visitor_routes.js` - line 35 - 51.
+- Already existing visitors are not allowed to register.
+- Distinction on the basis of email. No two users with same email can enter the premesis at the same time.
+
+	#### Checkout Form
+- Checkout only the users that are checked in and have the email in the visitors list.
+- Checkout on the basis of email, since it would be unique
+
+### Folder Structure
 
 ## Tech Stack
 ### Front End
@@ -23,7 +47,8 @@ API (Server Side) : [https://innov-api.herokuapp.com/](https://innov-api.herokua
 - Express JS
 - MongoDB [(Mongo Atlas)](https://www.mongodb.com/cloud/atlas)
 - [Mailjet API](https://www.mailjet.com/) ( Email )
-- 
+- [Twilio](https://www.twilio.com/) ( SMS )
+- Heroku
 
 ## Problem Statement
 https://summergeeks.in/static/assignments/summergeeks%202020%20-%20SDE%20Assignment.pdf
@@ -31,6 +56,7 @@ https://summergeeks.in/static/assignments/summergeeks%202020%20-%20SDE%20Assignm
 Creating an entry management system for the visitors coming to the organisation.
 
 ## Visuals
+
 
 ## Installation and Setup
 Requirements : 
@@ -53,6 +79,23 @@ Change the directory (cd) to Innovacer_entry_management_system.
 ```bash
 cd Innovacer_entry_management_system
 ```
+Before both client and server side setup,
+Create a `.env` file with data in the following format
+
+    DATABASEURL= #Create an account on mongo atlas, create cluster and then paste connection string here
+    
+    LDATABASEURL=mongodb://localhost/innovacer #mongodb must be installed and mongod running
+    
+    PORT=#port that you want to run API on 
+    
+    #sign up on mailjet and get both these to be able to send emails
+    MJ_APIKEY_PUBLIC=#public api key
+    
+    MJ_APIKEY_PRIVATE=#private api key
+
+The format of the `.env` file must comply with that of `.env.default` file.
+There files are meant to protect the private keys and database connection strings.
+
 To setup the **API of the project**
 Install the required packages for the API,
 ```bash
@@ -87,14 +130,19 @@ This is an issue with mongo unable to access cloud database.
 3. Since we are setting up the API locally,
 
 	-	Change the links for API use in the app.
-	In the client>components>visitor_form.jsx file change the link `https://innov-api.herokuapp.com/api/visitor/add` to `http://localhost:5000/api/visitor/add`
+	In the client > components > visitor_form.jsx file change the link `https://innov-api.herokuapp.com/api/visitor/add` to `http://localhost:5000/api/visitor/add`
 
-	-	Similarly In the client>components>checkou_form.jsx file change the link `https://innov-api.herokuapp.com/api/visitor/checkout` to `http://localhost:5000/api/visitor/checkout` 
+	-	Similarly In the client > components > checkou_form.jsx file change the link `https://innov-api.herokuapp.com/api/visitor/checkout` to `http://localhost:5000/api/visitor/checkout` 
 
 You are now able to run the app on your local machine,
+
+
+
+
 For any further assistance email at developer.akshatjain@gmail.com
 
 ## Usage/Walkthrough
+<explain with routes and images>
 
 - **Welcome Page** : This is the home page to the application. You have two choices, either to register as a new visitor or checkout.
 
@@ -111,12 +159,12 @@ Visitor would get an email containing all the details about his visit to the off
 Sample email is attached below,
 <img02>
 
-## API Endpoints
-
 ## Submission By
 
-Name : Akshat Jain
-Email : developer.akshatjain@gmail.com
-Phone : +91-8979297928
-LinkedIn : [https://www.linkedin.com/in/akshat-jain-88434b152/](https://www.linkedin.com/in/akshat-jain-88434b152/)
-GitHub : [https://github.com/iamakshatjain](https://github.com/iamakshatjain)
+- Name : Akshat Jain
+- Email : developer.akshatjain@gmail.com
+- Phone : +91-8979297928
+- LinkedIn : [https://www.linkedin.com/in/akshat-jain-88434b152/](https://www.linkedin.com/in/akshat-jain-88434b152/)
+- GitHub : [https://github.com/iamakshatjain](https://github.com/iamakshatjain)
+
+For Innovacer summer 2020 SDE Internship.

@@ -3,12 +3,12 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var cors = require("cors");
 
+var dotenv = require("dotenv");
+dotenv.config();
 app.use(cors());
 
-const DBURL = "mongodb+srv://test:akshatjain@innovacer-m8uau.mongodb.net/test?retryWrites=true&w=majority";
-const LDBURL = "mongodb://localhost/innovacer"
 
-mongoose.connect(LDBURL,
+mongoose.connect(process.env.LDATABASEURL,
   { useNewUrlParser: true }
 );
 

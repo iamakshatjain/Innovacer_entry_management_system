@@ -106,22 +106,22 @@ export default class checkoutForm extends React.Component {
                   marginTop: "2vh"
                 }}
               >
-                <button
-                  type="button"
-                  className="ui inverted basic blue button"
+                <Link
+                  to="/"
                   style={{
-                    width: "100%",
+                    textDecoration: "none",
+                    color: "white",
                     textAlign: "center",
                     marginRight: "1rem"
                   }}
                 >
-                  <Link
-                    to="/"
-                    style={{ textDecoration: "none", color: "white" }}
+                  <button
+                    type="button"
+                    className="ui inverted basic blue button"
                   >
                     <i className="arrow left icon"></i>Home
-                  </Link>
-                </button>
+                  </button>
+                </Link>
                 <button
                   type="submit"
                   className="ui inverted basic red button"
@@ -129,22 +129,23 @@ export default class checkoutForm extends React.Component {
                 >
                   Checkout
                 </button>
-                <button
-                  type="button"
-                  className="ui inverted basic blue button"
+
+                <Link
+                  to="/visitor"
                   style={{
-                    width: "100%",
-                    textAlign: "center",
-                    marginLeft: "1rem"
+                    textDecoration: "none",
+                    color: "white",
+                    marginLeft: "1rem",
+                    textAlign: "center"
                   }}
                 >
-                  <Link
-                    to="/visitor"
-                    style={{ textDecoration: "none", color: "white" }}
+                  <button
+                    type="button"
+                    className="ui inverted basic blue button"
                   >
                     Visitor<i className="arrow right icon"></i>
-                  </Link>
-                </button>
+                  </button>
+                </Link>
               </div>
             </div>
           </form>
