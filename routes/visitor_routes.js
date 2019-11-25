@@ -5,6 +5,8 @@ const mailjet = require("node-mailjet").connect(
   "2777d25dad8fa25676c9bf3123227dd8"
 );
 
+const axios = require("axios");
+
 //accessing visitor and host models and collections
 const Visitor = require("../models/visitor");
 const Host = require("../models/host");
@@ -80,17 +82,40 @@ router.post("/add", (req, res) => {
                           }
                         ],
                         "Subject": "Greetings from Akshat",
-                        "TextPart": `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${visitor.name} \nVisitor email : ${visitor.email} \nVisitor phone : ${visitor.phone}\n\nPlease recieve the person timely.`,
+                        "TextPart": `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${visitor.name} \nVisitor email : ${visitor.email} \nVisitor phone : ${visitor.phone}\n\nPlease recieve the guest timely.`,
                         // "HTMLPart": "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!"
                       }
                     ]
                   })
                 request
                   .then((result) => {
-                    console.log("Message Sent");
+                    console.log("Email Sent");
                     res.send(createdVisitor);
                     return;
                   })
+                  // .then(() => {
+                  //   const url = "https://www.way2sms.com";
+                  //   req_params = {
+                  //     'apikey': 'DID8T8O5X57586ODQ844J6JY6LJLO521',
+                  //     'secret': 'U379Q4VPXW6NX319',
+                  //     'usetype': 'stage',
+                  //     'phone': visitor.host_phone,
+                  //     'message': `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${visitor.name} \nVisitor email : ${visitor.email} \nVisitor phone : ${visitor.phone}\n\nPlease recieve the guest timely.`,
+                  //     // 'senderid': senderId
+                  //   }
+                  //   return axios.post(url, req_params);
+                  //   console.log("sending sms...");
+                  // })
+                  // .then((resp) => {
+                  //   console.log("sending sms");
+                  //   console.log(resp.data);
+                  //   if(resp.data.text)
+                  //     console.log("SMS sent");
+                  //   return;
+                  // })
+                  // .then(()=>{
+                  //   res.send(createdVisitor);
+                  // })
                   .catch((err) => {
                     console.log(err);
                     console.log("Error while sending message");
@@ -210,7 +235,7 @@ router.put("/checkout", (req, res) => {
               })
             request
               .then((result) => {
-                console.log("Message Sent");
+                console.log("Email Sent");
               })
               .then(() => {
                 console.log("VISITOR CHECKED OUT");

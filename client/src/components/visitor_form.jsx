@@ -45,7 +45,6 @@ export default class visitorForm extends React.Component {
           }
         });
 
-        console.log(resp);
 
         if (resp.data.error !== undefined) {
           console.log(resp.data.error);
