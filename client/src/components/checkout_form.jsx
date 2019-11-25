@@ -3,6 +3,8 @@ import React from "react";
 import history from "../history";
 import axios from "axios";
 
+import {Link} from "react-router-dom";
+
 export default class checkoutForm extends React.Component {
   state = {
     email: ""
@@ -23,10 +25,10 @@ export default class checkoutForm extends React.Component {
       params: data
     });
 
-    if (resp.error !== undefined) {
-      console.log(resp.error);
-      if (resp.error === "NO VISITOR FOUND") {
-        alert("No guest with this username");
+    if (resp.data.error !== undefined) {
+      console.log(resp.data.error);
+      if (resp.data.error === "NOVISITORFOUND") {
+        alert("No guest with this email checked in");
       } else {
         alert(
           "There was some error. Please try again. If the error continues, please email at developer.akshatjain@gmail.com"
@@ -42,7 +44,7 @@ export default class checkoutForm extends React.Component {
 
     alert("You are checked out.\nThanks for visiting us.")
 
-    history.push("/visitor")
+    history.push("/")
 
     return;
   };
@@ -50,19 +52,15 @@ export default class checkoutForm extends React.Component {
 
   render() {
     return (
-      <div className="ui container">
-        <form onSubmit={this.handleSubmit} className="ui form">
+      <div className="ui container" >
+        <form onSubmit={this.handleSubmit} className="ui form" style={{paddingTop : "20vh"}}>
           <div
             className="ui cards"
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              verticalAlign:"middle",
-              width: "100%"
-            }}
           >
-            <div className="card">
+            <div className="card" style = {{
+                  width : "70%",
+                  margin: "auto"
+            }}>
               <div className="content">
                 <h2 className="ui dividing header">Checkout Details</h2>
                 <div className="field">
@@ -80,9 +78,14 @@ export default class checkoutForm extends React.Component {
                 <div>
                   <button type="submit" className="ui danger button">Check-Out</button>
                 </div>
+                <br/>
+                <Link to="/">Home</Link>
+                <br/>
+                <Link to="/visitor">New Visitor</Link>
               </div>
             </div>
           </div>
+          
         </form>
       </div>
     );

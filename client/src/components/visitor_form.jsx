@@ -3,6 +3,9 @@ import React from "react";
 import history from "../history";
 import axios from "axios";
 
+import {Link} from "react-router-dom";
+
+
 export default class visitorForm extends React.Component {
     state = {
         name: "",
@@ -47,9 +50,11 @@ export default class visitorForm extends React.Component {
         if (resp.data.error !== undefined) {
           console.log(resp.data.error);
           if (resp.data.error === "VISITORFOUND") {
-            alert("A guest already registered with this name");
+            alert("A guest already checked in with these details");
           } else if (resp.data.error === "NOHOSTFOUND") {
             alert("No host with these details exists");
+          } else if (resp.data.error === "NETWORKISSUE") {
+            alert("There seems to be an issue with the internet. Please contact from the front desk.");
           } else {
             alert(
               "There was some error. Please try again. If the error continues, please email at developer.akshatjain@gmail.com"
@@ -176,10 +181,12 @@ export default class visitorForm extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div>
-                  <button type="submit" className="ui primary button">
+                <div style={{width : "100%", display:"flex"}}>
+                  <Link to="/" style={{ width: "100%", textAlign: "left" }}><i class="arrow left icon"></i>Home</Link>
+                  <button type="submit" className="ui primary button" style={{ width: "30%", textAlign: "center" }}>
                     Check-In
                   </button>
+                  <Link to="/checkout" style={{ width: "100%", textAlign: "right" }}>Checkout<i class="arrow right icon"></i></Link>
                 </div>
               </div>
             </form>

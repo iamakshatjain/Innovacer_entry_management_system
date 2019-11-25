@@ -5,6 +5,7 @@ const mailjet = require("node-mailjet").connect(
   "2777d25dad8fa25676c9bf3123227dd8"
 );
 
+//accessing visitor and host models and collections
 const Visitor = require("../models/visitor");
 const Host = require("../models/host");
 
@@ -19,6 +20,7 @@ router.post("/add", (req, res) => {
     if(err){
       console.error(err);
       res.send({ error: err });
+      return;
     }
 
     if(foundVisitor!==null){
@@ -28,22 +30,23 @@ router.post("/add", (req, res) => {
     }
     else{
       //check if the host does or doesn't exist - NO HOST FOUND
-      Host.findOne(
-        { email: visitor.host_email, name: visitor.host_name, phone:visitor.host_phone },
-        (err, foundHost) => {
-          console.log("checking host");
-          if (err) {
-            console.error(err);
-            res.send({ error: err });
-            return;
-          }
+      //commented for evaluation puposes
+      // Host.findOne(
+      //   { email: visitor.host_email, name: visitor.host_name, phone:visitor.host_phone },
+      //   (err, foundHost) => {
+      //     console.log("checking host");
+      //     if (err) {
+      //       console.error(err);
+      //       res.send({ error: err });
+      //       return;
+      //     }
 
-          if (foundHost === null) {
-            console.log("host not found");
-            res.send({ error: "NOHOSTFOUND" });
-            return;
-          }
-          else{
+      //     if (foundHost === null) {
+      //       console.log("host not found");
+      //       res.send({ error: "NOHOSTFOUND" });
+      //       return;
+      //     }
+          // else{
             var visitor_updated = {
               ...visitor,
               status: "CHECKEDIN",
@@ -57,36 +60,52 @@ router.post("/add", (req, res) => {
                 res.send({ error: err });
                 return;
               }
+              else{
+                console.log("VISITOR CREATED");
+                // console.log(createdVisitor);
 
-              console.log("VISITOR CREATED");
-              console.log(createdVisitor);
-              const request = await mailjet
-                .post("send", { version: "v3.1" })
-                .request({
-                  Messages: [
-                    {
-                      From: {
-                        Email: "wastea33@gmail.com",
-                        Name: "Akshat Jain"
-                      },
-                      To: [
-                        {
-                          Email: `${visitor.host_email}`,
-                          Name: `${visitor.host_name}`
-                        }
-                      ],
-                      Subject: "Greetings from Innovacer.",
-                      TextPart: `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${visitor.name} \nVisitor email : ${visitor.email} \nVisitor phone : ${visitor.phone}\n\nPlease recieve the person timely.`,
-                      CustomID: "AppGettingStartedTest"
-                    }
-                  ]
-                });
-
-              res.send(createdVisitor);
+                const request = mailjet
+                  .post("send", { 'version': 'v3.1' })
+                  .request({
+                    "Messages": [
+                      {
+                        "From": {
+                          "Email": "wastea33@gmail.com",
+                          "Name": "Arthur"
+                        },
+                        "To": [
+                          {
+                            "Email": `${visitor.host_email}`,
+                            "Name": `${visitor.host_name}`
+                          }
+                        ],
+                        "Subject": "Greetings from Akshat",
+                        "TextPart": `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${visitor.name} \nVisitor email : ${visitor.email} \nVisitor phone : ${visitor.phone}\n\nPlease recieve the person timely.`,
+                        // "HTMLPart": "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!"
+                      }
+                    ]
+                  })
+                request
+                  .then((result) => {
+                    console.log("Message Sent");
+                    res.send(createdVisitor);
+                    return;
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    console.log("Error while sending message");
+                    console.log(err.statusCode)
+                    if(err.statusCode == null)
+                      res.send({ error: "NETWORKISSUE" });
+                    else
+                      res.send({error : err});
+                    return;
+                  })   
+              }
             });
-          }
-        }
-      );
+          // }
+        // }
+      // );
     }
   });
 });
@@ -126,6 +145,19 @@ router.get("/read", (req, res) => {
   });
 });
 
+function timeConverter(UNIX_timestamp) {
+  var a = new Date(UNIX_timestamp);
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+  return time;
+}
+
 //Update - to checkout the visitor
 router.put("/checkout", (req, res) => {
   const userMail = req.query.e;
@@ -137,11 +169,13 @@ router.put("/checkout", (req, res) => {
         return;
         }
     
-    //if no visitor is inside
-    if (visitor === null) {
+    //if no visitor is inside - there is an error
+    if (visitor == null) {
+      console.log("no visitor is found");
       res.send({ error: "NOVISITORFOUND" });
       return;
     }else{
+
       //checking out the user - if the visitor is inisde
       visitor.check_out = Date.now();
       visitor.status = "CHECKEDOUT";
@@ -151,29 +185,47 @@ router.put("/checkout", (req, res) => {
           res.send({ error: err });
           return;
           }
-          //email to the visitor
-          const request = await mailjet.post("send", { version: "v3.1" }).request({
-          Messages: [
-            {
-              From: {
-                Email: "wastea33@gmail.com",
-                Name: "Akshat Jain"
-              },
-              To: [
-                {
-                  Email: `${visitor.host_email}`,
-                  Name: `${visitor.host_name}`
-                }
-              ],
-              Subject: "Greetings from Innovacer.",
-              TextPart: `Thanks for visiing Innovacer.\n\nVisit Details,  \nVisitor name : ${visitor.name} \nVisitor phone : ${visitor.phone} \nCheck In Time : ${new Date(visitor.check_in).toLocaleString()}\nCheck Out Time : ${new Date(visitor.check_out).toLocaleString()}\nHost Name : ${visitor.host_name}\nAddress Visited : ${visitor.add_visited}\n\nHave a nice day!.`,
-              CustomID: "AppGettingStartedTest"
-            }
-          ]
-        });
+          else{
+            // email to the visitor
+            const request = mailjet
+              .post("send", { 'version': 'v3.1' })
+              .request({
+                "Messages": [
+                  {
+                    "From": {
+                      "Email": "wastea33@gmail.com",
+                      "Name": "Arthur"
+                    },
+                    "To": [
+                      {
+                        "Email": `${visitor.email}`,
+                        "Name": `${visitor.name}`
+                      }
+                    ],
+                    "Subject": "Greetings from Akshat",
+                    "TextPart": `Thanks for visiing Innovacer.\n\nVisit Details,  \nName : ${visitor.name} \nPhone : ${visitor.phone} \nCheck In Time : ${new Date(parseInt(visitor.check_in)).toLocaleString()}\nCheck Out Time : ${new Date(parseInt(visitor.check_out)).toLocaleString()}\nHost Name : ${visitor.host_name}\nAddress Visited : ${visitor.add_visited}\n\nHave a nice day!.`,
+                    // "HTMLPart": "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!"
+                  }
+                ]
+              })
+            request
+              .then((result) => {
+                console.log("Message Sent");
+              })
+              .then(() => {
+                console.log("VISITOR CHECKED OUT");
+                res.send({ status: "CHECKED OUT" });
+                return;
+              })
+              .catch((err) => {
+                console.log("Error while sending message");
+                console.log(err.statusCode)
+                res.send({ error: err });
+                return;
+              })
+
           //todo : sms to the visitor
-          console.log("VISITOR CHECKED OUT");
-          res.send({status : "CHECKED OUT"});
+          } 
       })
     }
   });
