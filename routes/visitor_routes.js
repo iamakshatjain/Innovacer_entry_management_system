@@ -62,7 +62,12 @@ router.post("/add", (req, res) => {
                 res.send({ error: err });
                 return;
               }
+              if(createdVisitor == null){
+                res.send({ error: "CANTCREATEUSER" });
+                return;
+              }
               else{
+
                 console.log("VISITOR CREATED");
 
                 const request = mailjet
@@ -92,39 +97,16 @@ router.post("/add", (req, res) => {
                     res.send(createdVisitor);
                     return;
                   })
-                  // .then(() => {
-                  //   const url = "https://www.way2sms.com";
-                  //   req_params = {
-                  //     'apikey': 'DID8T8O5X57586ODQ844J6JY6LJLO521',
-                  //     'secret': 'U379Q4VPXW6NX319',
-                  //     'usetype': 'stage',
-                  //     'phone': visitor.host_phone,
-                  //     'message': `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${visitor.name} \nVisitor email : ${visitor.email} \nVisitor phone : ${visitor.phone}\n\nPlease recieve the guest timely.`,
-                  //     // 'senderid': senderId
-                  //   }
-                  //   return axios.post(url, req_params);
-                  //   console.log("sending sms...");
-                  // })
-                  // .then((resp) => {
-                  //   console.log("sending sms");
-                  //   console.log(resp.data);
-                  //   if(resp.data.text)
-                  //     console.log("SMS sent");
-                  //   return;
-                  // })
-                  // .then(()=>{
-                  //   res.send(createdVisitor);
-                  // })
                   .catch((err) => {
-                    console.log(err);
-                    console.log("Error while sending message");
-                    console.log(err.statusCode)
+                    // console.log(err);
+                    console.log("Error while sending email");
+                    console.log(err.statusCode);
                     if(err.statusCode == null)
                       res.send({ error: "NETWORKISSUE" });
                     else
                       res.send({error : err});
                     return;
-                  })   
+                  });   
               }
             });
           // }
@@ -186,6 +168,7 @@ function timeConverter(UNIX_timestamp) {
 router.put("/checkout", (req, res) => {
   const userMail = req.query.e;
 
+  //checking if any guest with this email is in the offices
   Visitor.findOne({ email : userMail, status:"CHECKEDIN" }, (err, visitor) => {
     if (err) {
         console.error(err);
@@ -198,12 +181,12 @@ router.put("/checkout", (req, res) => {
       console.log("no visitor is found");
       res.send({ error: "NOVISITORFOUND" });
       return;
-    }else{
 
+    }else{
       //checking out the user - if the visitor is inisde
       visitor.check_out = Date.now();
       visitor.status = "CHECKEDOUT";
-      visitor.save(async(err) => {
+      visitor.save((err) => {
           if (err) {
           console.error(err);
           res.send({ error: err });
@@ -227,7 +210,7 @@ router.put("/checkout", (req, res) => {
                       }
                     ],
                     "Subject": "Greetings from Akshat",
-                    "TextPart": `Thanks for visiing Innovacer.\n\nVisit Details,  \nName : ${visitor.name} \nPhone : ${visitor.phone} \nCheck In Time : ${new Date(parseInt(visitor.check_in)).toLocaleString()}\nCheck Out Time : ${new Date(parseInt(visitor.check_out)).toLocaleString()}\nHost Name : ${visitor.host_name}\nAddress Visited : ${visitor.add_visited}\n\nHave a nice day!.`,
+                    "TextPart": `Thanks for visiting Innovacer.\n\nVisit Details,  \nName : ${visitor.name} \nPhone : ${visitor.phone} \nCheck In Time : ${new Date(parseInt(visitor.check_in)).toLocaleString()}\nCheck Out Time : ${new Date(parseInt(visitor.check_out)).toLocaleString()}\nHost Name : ${visitor.host_name}\nAddress Visited : ${visitor.add_visited}\n\nHave a nice day!.`,
                   }
                 ]
               })
@@ -245,7 +228,7 @@ router.put("/checkout", (req, res) => {
                 console.log(err.statusCode)
                 res.send({ error: err });
                 return;
-              })
+              });
           } 
       })
     }

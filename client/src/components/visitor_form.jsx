@@ -20,17 +20,17 @@ export default class visitorForm extends React.Component {
     handleSubmit = async(e) => {
         e.preventDefault();
         const data = this.state;
-        if(data.name=="" || data.host_name==""){
+        if(data.name==="" || data.host_name===""){
           alert("No empty request allowed.\nPlease try again.");
           return;
         }
 
-        if (data.phone == data.host_phone) {
+        if (data.phone === data.host_phone) {
           alert("Visitor and host must not have same mobile numbers");
           return;
         }
 
-        if (data.email == data.host_email) {
+        if (data.email === data.host_email) {
           alert("Visitor and host must not have same email");
           return;
         }
@@ -87,108 +87,195 @@ export default class visitorForm extends React.Component {
     render() {
         return (
           <div
-            className="ui container"
+            className="ui"
           >
-            <br />
-            <form className="ui form" onSubmit={this.handleSubmit}>
-              <div
-                className="ui cards"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  width: "100%"
-                }}
-              >
-                <div className="card" style={{ width: "60%" }}>
-                  <div className="content">
-                    <h2 className="ui dividing header">Visitor Details</h2>
-                    <div className="field">
-                      <label htmlFor="name">Name</label>
-                      <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        value={this.state.name}
-                        onChange={e => this.setState({ name: e.target.value })}
-                      />
-                    </div>
+            <h1
+              style={{ textAlign: "center", paddingTop: "5vh", color: "white", fontSize:"3rem" }}
+            >
+              VISITOR REGISTRATION
+            </h1>
+            <div className="container">
+              <br />
+              <form className="ui form" onSubmit={this.handleSubmit}>
+                <div
+                  className="ui cards"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    width: "100%",
+                    padding: "1rem"
+                  }}
+                >
+                  <div className="card" style={{ width: "80%" }}>
+                    <div className="content">
+                      <h2 className="ui dividing header">Visitor Details</h2>
+                      <div className="field">
+                        <label htmlFor="name">Name</label>
+                        <div className="ui left icon input">
+                          <input
+                            required
+                            placeholder="Visitor Name"
+                            id="name"
+                            name="name"
+                            type="text"
+                            value={this.state.name}
+                            onChange={e =>
+                              this.setState({ name: e.target.value })
+                            }
+                          />
+                          <i className="user icon"></i>
+                        </div>
+                      </div>
+                      <div className="two fields">
+                        <div className="field">
+                          <label htmlFor="email">Email</label>
+                          <div className="ui left icon input">
+                            <input
+                            required  
+                              placeholder="Visitor Email"
+                              id="email"
+                              name="email"
+                              type="email"
+                              value={this.state.email}
+                              onChange={e =>
+                                this.setState({ email: e.target.value })
+                              }
+                            />
+                            <i className="envelope icon"></i>
+                          </div>
+                        </div>
 
-                    <div className="field">
-                      <label htmlFor="email">Email</label>
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={this.state.email}
-                        onChange={e => this.setState({ email: e.target.value })}
-                      />
-                    </div>
-
-                    <div className="field">
-                      <label htmlFor="phone">Phone</label>
-                      <input
-                        id="phone"
-                        name="phone"
-                        type="text"
-                        value={this.state.phone}
-                        onChange={e => this.setState({ phone: e.target.value })}
-                      />
+                        <div className="field">
+                          <label htmlFor="phone">Phone</label>
+                          <div className="ui left icon input">
+                            <input
+                            required  
+                              placeholder="Visitor Phone"
+                              id="phone"
+                              name="phone"
+                              type="text"
+                              value={this.state.phone}
+                              onChange={e =>
+                                this.setState({ phone: e.target.value })
+                              }
+                            />
+                            <i className="phone icon"></i>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="card" style={{ width: "60%" }}>
-                  <div className="content">
-                    <h2 class="ui dividing header">Host Details</h2>
-                    <div className="field">
-                      <label htmlFor="host_name">Name</label>
-                      <input
-                        id="host_name"
-                        name="host_name"
-                        type="text"
-                        value={this.state.host_name}
-                        onChange={e =>
-                          this.setState({ host_name: e.target.value })
-                        }
-                      />
-                    </div>
+                  <div className="card" style={{ width: "80%" }}>
+                    <div className="content">
+                      <h2 className="ui dividing header">Host Details</h2>
+                      <div className="field">
+                        <label htmlFor="host_name">Name</label>
+                        <div className="ui left icon input">
+                          <input
+                            required
+                            placeholder="Host Name"
+                            id="host_name"
+                            name="host_name"
+                            type="text"
+                            value={this.state.host_name}
+                            onChange={e =>
+                              this.setState({ host_name: e.target.value })
+                            }
+                          />
+                          <i className="user icon"></i>
+                        </div>
+                      </div>
+                      <div className="two fields">
+                        <div className="field">
+                          <label htmlFor="host_email">Email</label>
+                          <div className="ui left icon input">
+                            <input
+                            required  
+                              placeholder="Host Email"
+                              id="host_email"
+                              name="host_email"
+                              type="email"
+                              value={this.state.host_email}
+                              onChange={e =>
+                                this.setState({ host_email: e.target.value })
+                              }
+                            />
+                            <i className="envelope icon"></i>
+                          </div>
+                        </div>
 
-                    <div className="field">
-                      <label htmlFor="host_email">Email</label>
-                      <input
-                        id="host_email"
-                        name="host_email"
-                        type="email"
-                        value={this.state.host_email}
-                        onChange={e =>
-                          this.setState({ host_email: e.target.value })
-                        }
-                      />
-                    </div>
-
-                    <div className="field">
-                      <label htmlFor="host_phone">Phone</label>
-                      <input
-                        id="host_phone"
-                        name="host_phone"
-                        type="text"
-                        value={this.state.host_phone}
-                        onChange={e =>
-                          this.setState({ host_phone: e.target.value })
-                        }
-                      />
+                        <div className="field">
+                          <label htmlFor="host_phone">Phone</label>
+                          <div className="ui left icon input">
+                            <input
+                            required  
+                              placeholder="Host Phone"
+                              id="host_phone"
+                              name="host_phone"
+                              type="text"
+                              value={this.state.host_phone}
+                              onChange={e =>
+                                this.setState({ host_phone: e.target.value })
+                              }
+                            />
+                            <i className="phone icon"></i>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  <div
+                    style={{
+                      width: "80%",
+                      display: "flex",
+                      flexDirection: "row"
+                    }}
+                  >
+                    <button
+                      type="button"
+                      className="ui inverted basic blue button"
+                      style={{
+                        width: "100%",
+                        textAlign: "center",
+                        marginRight: "1rem"
+                      }}
+                    >
+                      <Link
+                        to="/"
+                        style={{ textDecoration: "none", color: "white" }}
+                      >
+                        <i className="arrow left icon"></i>Home
+                      </Link>
+                    </button>
+                    <button
+                      type="submit"
+                      className="ui inverted basic red button"
+                      style={{ width: "300%", textAlign: "center" }}
+                    >
+                      Checkin
+                    </button>
+                    <button
+                      type="button"
+                      className="ui inverted basic blue button"
+                      style={{
+                        width: "100%",
+                        textAlign: "center",
+                        marginLeft: "1rem"
+
+                      }}
+                    >
+                      <Link
+                        to="/checkout"
+                        style={{ textDecoration: "none", color: "white" }}
+                      >
+                        Checkout<i className="arrow right icon"></i>
+                      </Link>
+                    </button>
+                  </div>
                 </div>
-                <div style={{width : "100%", display:"flex"}}>
-                  <Link to="/" style={{ width: "100%", textAlign: "left" }}><i class="arrow left icon"></i>Home</Link>
-                  <button type="submit" className="ui primary button" style={{ width: "30%", textAlign: "center" }}>
-                    Check-In
-                  </button>
-                  <Link to="/checkout" style={{ width: "100%", textAlign: "right" }}>Checkout<i class="arrow right icon"></i></Link>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         );
     }

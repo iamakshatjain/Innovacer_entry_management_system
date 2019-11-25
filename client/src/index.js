@@ -15,7 +15,7 @@ class App extends React.Component{
               <Route path="/" exact component={Home} />
               <Route path="/visitor" exact component={VisitorRegistration} />
               <Route path="/checkout" exact component={CheckoutVisitor} />
-              {/* <Redirect to="/" from="*" /> */}
+              <Redirect to="/" from="*" />
               {/* for handling random route */}
             </Router>
           </div>

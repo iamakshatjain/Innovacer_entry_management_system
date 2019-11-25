@@ -13,7 +13,7 @@ export default class checkoutForm extends React.Component {
   handleSubmit = async e => {
     e.preventDefault();
     const data = {e : this.state.email};
-    if (data.e == ""){
+    if (data.e === ""){
       alert("No empty request allowed.\nPlease try again.");
       return;
     }
@@ -52,42 +52,107 @@ export default class checkoutForm extends React.Component {
 
   render() {
     return (
-      <div className="ui container" >
-        <form onSubmit={this.handleSubmit} className="ui form" style={{paddingTop : "20vh"}}>
-          <div
-            className="ui cards"
+      <div className="ui">
+        <h1
+          style={{
+            textAlign: "center",
+            paddingTop: "5vh",
+            color: "white",
+            fontSize: "3rem"
+          }}
+        >
+          CHECKOUT
+        </h1>
+        <div className="container">
+          <form
+            onSubmit={this.handleSubmit}
+            className="ui form"
+            style={{ paddingTop: "20vh" }}
           >
-            <div className="card" style = {{
-                  width : "70%",
+            <div className="ui cards">
+              <div
+                className="card"
+                style={{
+                  width: "80%",
                   margin: "auto"
-            }}>
-              <div className="content">
-                <h2 className="ui dividing header">Checkout Details</h2>
-                <div className="field">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="text"
-                    value={this.state.email}
-                    onChange={e => this.setState({ email: e.target.value })}
-                  />
+                }}
+              >
+                <div className="content">
+                  <h2 className="ui dividing header">Checkout Details</h2>
+                  <div className="field">
+                    <label htmlFor="email">Email</label>
+                    <div className="ui left icon input">
+                      <input
+                        required
+                        placeholder="Visitor Email"
+                        id="email"
+                        name="email"
+                        type="text"
+                        value={this.state.email}
+                        onChange={e => this.setState({ email: e.target.value })}
+                      />
+                      <i className="envelope icon"></i>
+                    </div>
+                  </div>
                 </div>
-
-                <br />
-                <div>
-                  <button type="submit" className="ui danger button">Check-Out</button>
-                </div>
-                <br/>
-                <Link to="/">Home</Link>
-                <br/>
-                <Link to="/visitor">New Visitor</Link>
+              </div>
+              <br />
+              <div
+                style={{
+                  width: "80%",
+                  display: "flex",
+                  flexDirection: "row",
+                  margin: "auto",
+                  marginTop: "2vh"
+                }}
+              >
+                <button
+                  type="button"
+                  className="ui inverted basic blue button"
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    marginRight: "1rem"
+                  }}
+                >
+                  <Link
+                    to="/"
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    <i className="arrow left icon"></i>Home
+                  </Link>
+                </button>
+                <button
+                  type="submit"
+                  className="ui inverted basic red button"
+                  style={{ width: "300%", textAlign: "center" }}
+                >
+                  Checkout
+                </button>
+                <button
+                  type="button"
+                  className="ui inverted basic blue button"
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    marginLeft: "1rem"
+                  }}
+                >
+                  <Link
+                    to="/visitor"
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    Visitor<i className="arrow right icon"></i>
+                  </Link>
+                </button>
               </div>
             </div>
-          </div>
-          
-        </form>
+          </form>
+        </div>
       </div>
+      // <div className="ui container">
+
+      // </div>
     );
   }
 }
