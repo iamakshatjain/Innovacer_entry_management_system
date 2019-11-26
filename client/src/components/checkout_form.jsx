@@ -103,7 +103,8 @@ export default class checkoutForm extends React.Component {
                   display: "flex",
                   flexDirection: "row",
                   margin: "auto",
-                  marginTop: "2vh"
+                  marginTop: "2vh",
+                  justifyContent:"center"
                 }}
               >
                 <Link
@@ -119,13 +120,13 @@ export default class checkoutForm extends React.Component {
                     type="button"
                     className="ui inverted basic blue button"
                   >
-                    <i className="arrow left icon"></i>Home
+                    Home
                   </button>
                 </Link>
                 <button
                   type="submit"
                   className="ui inverted basic red button"
-                  style={{ width: "300%", textAlign: "center" }}
+                  style={{textAlign: "center" }}
                 >
                   Checkout
                 </button>
@@ -143,7 +144,7 @@ export default class checkoutForm extends React.Component {
                     type="button"
                     className="ui inverted basic blue button"
                   >
-                    Visitor<i className="arrow right icon"></i>
+                    Visitor
                   </button>
                 </Link>
               </div>

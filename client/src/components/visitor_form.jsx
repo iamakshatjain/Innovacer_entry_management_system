@@ -235,11 +235,12 @@ export default class visitorForm extends React.Component {
                     </div>
                   </div>
                   <div
-                    style={{
-                      width: "80%",
-                      display: "flex",
-                      flexDirection: "row"
-                    }}
+                    // style={{
+                    //   width: "80%",
+                    //   display: "flex",
+                    //   flexDirection: "row"
+                    // }}
+                    className="ui three column grid"
                   >
                     <Link
                       to="/"
@@ -247,37 +248,41 @@ export default class visitorForm extends React.Component {
                         textDecoration: "none",
                         color: "white",
                         textAlign: "center",
-                        marginRight: "1rem"
+                        // marginRight: "1rem"
                       }}
+                      className="column"
                     >
                       <button
                         type="button"
                         className="ui inverted basic blue button"
                       >
-                        <i className="arrow left icon"></i>Home
+                        Home
                       </button>
                     </Link>
-                    <button
-                      type="submit"
-                      className="ui inverted basic red button"
-                      style={{ width: "300%", textAlign: "center" }}
-                    >
-                      Checkin
-                    </button>
+                    <div className=" column ">
+                      <button
+                        type="submit"
+                        className="ui inverted basic red button"
+                        style={{  width:"100%", textAlign: "center" }}
+                      >
+                        Checkin
+                      </button>
+                    </div>
                     <Link
                       to="/checkout"
                       style={{
                         textAlign: "center",
-                        marginLeft: "1rem",
+                        // marginLeft: "1rem",
                         textDecoration: "none",
                         color: "white"
                       }}
+                      className="column"
                     >
                       <button
                         type="button"
                         className="ui inverted basic blue button"
                       >
-                        Checkout<i className="arrow right icon"></i>
+                        Checkout
                       </button>
                     </Link>
                   </div>
