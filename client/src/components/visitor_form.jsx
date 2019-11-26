@@ -37,7 +37,7 @@ export default class visitorForm extends React.Component {
         
         //calling the api to create a visitor
         const resp = await axios({
-          url: "http://localhost:5000/api/visitor/add",
+          url: "https://innov-api.herokuapp.com/api/visitor/add",
           method: "post",
           data: data,
           headers: {
@@ -119,6 +119,7 @@ export default class visitorForm extends React.Component {
                           <input
                             required
                             placeholder="Visitor Name"
+                            title="Enter visitor's name"
                             id="name"
                             name="name"
                             type="text"
@@ -137,6 +138,7 @@ export default class visitorForm extends React.Component {
                             <input
                               required
                               placeholder="Visitor Email"
+                              title="Enter visitor's email"
                               id="email"
                               name="email"
                               type="email"
@@ -154,7 +156,8 @@ export default class visitorForm extends React.Component {
                           <div className="ui left icon input">
                             <input
                               required
-                              placeholder="Visitor Phone"
+                              title="Enter visitor's phone number"
+                              placeholder="Visitor Phone (India)"
                               id="phone"
                               name="phone"
                               type="text"
@@ -177,6 +180,7 @@ export default class visitorForm extends React.Component {
                         <div className="ui left icon input">
                           <input
                             required
+                            title="Enter host's name"
                             placeholder="Host Name"
                             id="host_name"
                             name="host_name"
@@ -195,6 +199,7 @@ export default class visitorForm extends React.Component {
                           <div className="ui left icon input">
                             <input
                               required
+                              title="Enter host's email"
                               placeholder="Host Email"
                               id="host_email"
                               name="host_email"
@@ -213,7 +218,8 @@ export default class visitorForm extends React.Component {
                           <div className="ui left icon input">
                             <input
                               required
-                              placeholder="Host Phone"
+                              title="Enter host's phone"
+                              placeholder="Host Phone (India)"
                               id="host_phone"
                               name="host_phone"
                               type="text"

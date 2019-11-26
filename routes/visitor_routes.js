@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const router = require('express').Router();
 const mailjet = require("node-mailjet").connect(process.env.MJ_APIKEY_PUBLIC,process.env.MJ_APIKEY_PRIVATE);
-
-const axios = require("axios");
+const sendSMS = require("../send_sms");
+// const axios = require("axios");
 
 //accessing visitor and host models and collections
 const Visitor = require("../models/visitor");
@@ -48,6 +48,12 @@ router.post("/add", (req, res) => {
           // else{
             var visitor_updated = {
               ...visitor,
+              host_phone: `91${visitor.host_phone.slice(
+                visitor.host_phone.length - 10
+              )}`,
+              phone: `91${visitor.phone.slice(
+                visitor.phone.length - 10
+              )}`,
               status: "CHECKEDIN",
               check_in: Date.now(),
               created_at: Date.now()
@@ -78,30 +84,34 @@ router.post("/add", (req, res) => {
                         },
                         "To": [
                           {
-                            "Email": `${visitor.host_email}`,
-                            "Name": `${visitor.host_name}`
+                            "Email": `${createdVisitor.host_email}`,
+                            "Name": `${createdVisitor.host_name}`
                           }
                         ],
                         "Subject": "Greetings from Akshat",
-                        "TextPart": `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${visitor.name} \nVisitor email : ${visitor.email} \nVisitor phone : ${visitor.phone}\n\nPlease recieve the guest timely.`,
+                        "TextPart": `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${createdVisitor.name} \nVisitor email : ${createdVisitor.email} \nVisitor phone : ${createdVisitor.phone}\n\nPlease recieve the guest timely.`,
                         // "HTMLPart": "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!"
                       }
                     ]
                   })
                 request
                   .then((result) => {
+                    return sendSMS(
+                      `${createdVisitor.host_phone}`,
+                      `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${createdVisitor.name} \nVisitor email : ${createdVisitor.email} \nVisitor phone : ${createdVisitor.phone}\n\nPlease recieve the guest timely.`
+                    );
+                  })
+                  .then(() => {
                     console.log("Email Sent");
                     res.send(createdVisitor);
                     return;
                   })
-                  .catch((err) => {
-                    // console.log(err);
-                    console.log("Error while sending email");
+                  .catch(err => {
+                    console.log("Error while sending");
                     console.log(err.statusCode);
-                    if(err.statusCode == null)
+                    if (err.statusCode == null)
                       res.send({ error: "NETWORKISSUE" });
-                    else
-                      res.send({error : err});
+                    else res.send({ error: err });
                     return;
                   });   
               }

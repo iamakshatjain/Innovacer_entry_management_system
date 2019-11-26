@@ -20,7 +20,7 @@ export default class checkoutForm extends React.Component {
 
     //calling the api to create a visitor
     const resp = await axios({
-      url: "http://localhost:5000/api/visitor/checkout",
+      url: "https://innov-api.herokuapp.com/api/visitor/checkout",
       method: "put",
       params: data
     });

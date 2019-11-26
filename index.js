@@ -8,7 +8,7 @@ dotenv.config();
 app.use(cors());
 
 
-mongoose.connect(process.env.LDATABASEURL,
+mongoose.connect(process.env.DATABASEURL,
   { useNewUrlParser: true }
 );
 

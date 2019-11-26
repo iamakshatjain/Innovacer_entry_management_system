@@ -1,12 +1,33 @@
 const Nexmo = require("nexmo");
+require("dotenv").config();
 
 const nexmo = new Nexmo({
-  apiKey: "26edfce6",
-  apiSecret: "r0RZ0KCzTuzJbiRi"
+  apiKey: process.env.NEXMO_APIKEY,
+  apiSecret: process.env.NEXMO_APISECRET
 });
 
-const from = "Nexmo";
-const to = "918979297928";
-const text = "Hello from Nexmo";
+const sendSMS = (reciever, body) => {
+  const from = process.env.NEXMO_FROM_NO;
+  const to = reciever;
+  const text = body;
 
-nexmo.message.sendSms(from, to, text);
+  // const resp = await nexmo.message.sendSms(from, to, text);
+  // console.log(resp);
+  console.log("Sending message...");
+  nexmo.message.sendSms(from, to, text, (err, responseData) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if (responseData.messages[0]["status"] === "0") {
+        console.log("Message sent successfully.");
+      } else {
+        console.log(
+          `Message failed with error: ${responseData.messages[0]["error-text"]}`
+        );
+      }
+    }
+  });
+} 
+
+module.exports = sendSMS;
+
