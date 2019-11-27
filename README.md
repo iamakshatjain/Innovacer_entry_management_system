@@ -9,9 +9,10 @@ This is a web based entry management system made with ReactJS on the front end a
 - Youtube Video : 
 - React app (Client Side) : [http://innovems.herokuapp.com/](http://innovems.herokuapp.com/)
 - API (Server Side) : [https://innov-api.herokuapp.com/](https://innov-api.herokuapp.com/)
+**Note :** Heroku uses shared dynos that may sleep at times for shared and free accounts. The deployed apps above uses the free account. Hence it may sometimes take a little of time to wake up the server and display the app on browser, it may also give `Application error` at times, try refreshing the page and it would work fine.
 
 ### Assumptions
- -  The software is being made to be used in a screen at the reception desk of the organisation and not in mobile devices of visitors. 
+ -  The software is being made to be used in a kiosk at the reception desk of the organisation and not in mobile devices of visitors. 
 	 -	Hence he must have no access to data other than his own.
 	-	Hence there is also no need for authentication.
 	 -	The user Interface must be as user friendly and simple as possible.
@@ -35,6 +36,7 @@ Note :  All the errors are shown to the user in the form of a prompt window like
 - Host must be registered before visitor can enter his details into the form ( coded and commented - `visitor_routes.js` - line 35 - 51)
 - Already existing visitors are not allowed to register.
 - Distinction on the basis of email. No two users with same email can enter the premesis at the same time.
+- Both phone numbers must be 10 digit indian phone numbers (begining digit must be 5-9).
 
 	#### Checkout Form
 - Checkout only the users that are checked in and have the email in the visitors list.
@@ -102,6 +104,10 @@ Create a `.env` file with data in the following format
     MJ_APIKEY_PUBLIC=#public api key
     
     MJ_APIKEY_PRIVATE=#private api key
+
+	MJ_SENDER_EMAIL=#mailjet registered email
+
+	MJ_SENDER_NAME=#mailjet registered username
     
     #sign in to a nexmo account
 	NEXMO_APIKEY=#nexmo api key,from dashboard
@@ -300,6 +306,8 @@ If you clicked on the **New Visitor** button,
 	-	Host's phone number must be a registered **indian** phone number.
 	-	Host's phone number must be whitelisted on nexmo account.
 	-	Nexmo from number (sender) must be a registered account on nexmo.
+	-	Host's phone number must not be same as the nexmo registered sender number
+	-	The SMS service works from 9 AM to 9 PM only.
 	-	Expect a litte latency while sending and recieving emails and SMS.
 
 

@@ -157,10 +157,11 @@ export default class visitorForm extends React.Component {
                             <input
                               required
                               title="Enter visitor's phone number"
-                              placeholder="Visitor Phone (India)"
+                              placeholder="Visitor Phone (10 digit - Indian)"
                               id="phone"
                               name="phone"
-                              type="text"
+                              type="tel"
+                              pattern="[5-9]{1}[0-9]{9}"
                               value={this.state.phone}
                               onChange={e =>
                                 this.setState({ phone: e.target.value })
@@ -219,11 +220,12 @@ export default class visitorForm extends React.Component {
                             <input
                               required
                               title="Enter host's phone"
-                              placeholder="Host Phone (India)"
+                              placeholder="Host Phone (10 digit - Indian)"
                               id="host_phone"
                               name="host_phone"
-                              type="text"
+                              type="tel"
                               value={this.state.host_phone}
+                              pattern="[5-9]{1}[0-9]{9}"
                               onChange={e =>
                                 this.setState({ host_phone: e.target.value })
                               }

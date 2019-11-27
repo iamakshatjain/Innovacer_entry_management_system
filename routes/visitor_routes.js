@@ -79,8 +79,8 @@ router.post("/add", (req, res) => {
                     "Messages": [
                       {
                         "From": {
-                          "Email": "wastea33@gmail.com",
-                          "Name": "Arthur"
+                          "Email": process.env.MJ_SENDER_EMAIL,
+                          "Name": process.env.MJ_SENDER_NAME
                         },
                         "To": [
                           {
@@ -96,10 +96,10 @@ router.post("/add", (req, res) => {
                   })
                 request
                   .then((result) => {
-                    return sendSMS(
-                      `${createdVisitor.host_phone}`,
-                      `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${createdVisitor.name} \nVisitor email : ${createdVisitor.email} \nVisitor phone : ${createdVisitor.phone}\n\nPlease recieve the guest timely.`
-                    );
+                    // return sendSMS(
+                    //   `${createdVisitor.host_phone}`,
+                    //   `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${createdVisitor.name} \nVisitor email : ${createdVisitor.email} \nVisitor phone : ${createdVisitor.phone}\n\nPlease recieve the guest timely.`
+                    // );
                   })
                   .then(() => {
                     console.log("Email Sent");
@@ -207,8 +207,8 @@ router.put("/checkout", (req, res) => {
                 "Messages": [
                   {
                     "From": {
-                      "Email": "wastea33@gmail.com",
-                      "Name": "Arthur"
+                      "Email": process.env.MJ_SENDER_EMAIL,
+                      "Name": process.env.MJ_SENDER_NAME
                     },
                     "To": [
                       {
