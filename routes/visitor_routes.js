@@ -96,10 +96,10 @@ router.post("/add", (req, res) => {
                   })
                 request
                   .then((result) => {
-                    // return sendSMS(
-                    //   `${createdVisitor.host_phone}`,
-                    //   `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${createdVisitor.name} \nVisitor email : ${createdVisitor.email} \nVisitor phone : ${createdVisitor.phone}\n\nPlease recieve the guest timely.`
-                    // );
+                    return sendSMS(
+                      `${createdVisitor.host_phone}`,
+                      `Visitor waiting for you at the reception.\n\nVisitor Details,  \nVisitor name : ${createdVisitor.name} \nVisitor email : ${createdVisitor.email} \nVisitor phone : ${createdVisitor.phone}\n\nPlease recieve the guest timely.`
+                    );
                   })
                   .then(() => {
                     console.log("Email Sent");
